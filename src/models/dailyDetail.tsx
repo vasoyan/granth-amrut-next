@@ -1,0 +1,37 @@
+export interface DailyDetail {
+  infoid: number;
+  infodate?: Date | null;
+  infoyear?: number | null;
+  infomonth?: number | null;
+  infoday?: number | null;
+  place?: string | null;
+  city?: string | null;
+  shortdescguj?: string | null;
+  shortdeschindi?: string | null;
+  shortdesceng?: string | null;
+  placelong?: number | null;
+  placelatt?: number | null;
+  longdesc?: string | null;
+  pradesh?: string | null;
+  flagpadharamni?: boolean | null;
+  flagsabha?: boolean | null;
+  flagthal?: boolean | null;
+  videourl?: string | null;
+  photourl?: string | null;
+  audioref?: string | null;
+  flagtelegram?: boolean | null;
+  flagpatrikaapp?: boolean | null;
+  flagparamrutapp?: boolean | null;
+  flagvicharanapp?: boolean | null;
+  flagsuhradapp?: boolean | null;
+  flagprivate?: boolean | null;
+  flagcalendar?: boolean | null;
+  flagavd?: boolean | null;
+  flagai?: boolean | null;
+  userid?: number | null;
+  reference?: string | null;
+  category?: string | null;
+  remark?: string | null;
+  extrafield1?: string | null;
+  extrafield2?: string | null;
+}

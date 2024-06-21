@@ -1,0 +1,364 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+  schemas  = ["anirdesh", "dbo"]
+}
+
+model amrut {
+  id         Int     @id(map: "PK_amrut") @db.SmallInt
+  bookname   String? @db.NVarChar(50)
+  achaman    String? @db.NVarChar(50)
+  sabhatitle String? @db.NText
+  vatno      Int?    @db.SmallInt
+  vathtml    String? @db.NText
+  vattags    String? @db.NText
+  vyear      String? @db.NVarChar(50)
+  vinfo      String? @db.NText
+
+  @@schema("dbo")
+}
+
+model BhajanCategory {
+  BhajanCatId                                               Int            @id(map: "PK_BhajanCategory") @default(autoincrement()) @db.SmallInt
+  BhajanCatName                                             String?        @db.VarChar(25)
+  BhajanMaster_BhajanMaster_FK_BhajanCatIdToBhajanCategory  BhajanMaster[] @relation("BhajanMaster_FK_BhajanCatIdToBhajanCategory")
+  BhajanMaster_BhajanMaster_FK_BhajanCatId1ToBhajanCategory BhajanMaster[] @relation("BhajanMaster_FK_BhajanCatId1ToBhajanCategory")
+
+  @@schema("dbo")
+}
+
+model BhajanMaster {
+  BhajanId                                                    Int             @id(map: "PK_Bhajan") @default(autoincrement())
+  BhajanName                                                  String?         @db.VarChar(50)
+  BhajanFile                                                  String?         @db.VarChar(250)
+  BhajanAudioFile                                             String?         @db.VarChar(250)
+  FK_BhajanCatId                                              Int?            @db.SmallInt
+  Reference                                                   String?         @db.VarChar(50)
+  Remark                                                      String?         @db.VarChar(50)
+  IsDeleted                                                   Int?            @default(0, map: "DF_BhajanMaster_IsDelete") @db.TinyInt
+  FK_BhajanCatId1                                             Int?            @db.SmallInt
+  BhajanNameGuj                                               String?         @db.NVarChar(250)
+  BhajanNameHindi                                             String?         @db.NVarChar(250)
+  SrNo                                                        Int             @default(0, map: "DF_BhajanMaster_SrNo")
+  IsEng                                                       Int             @default(0, map: "DF__BhajanMas__IsEng__60A75C0F") @db.TinyInt
+  IsHnd                                                       Int             @default(0, map: "DF__BhajanMas__IsHnd__619B8048") @db.TinyInt
+  IsGer                                                       Int             @default(0, map: "DF__BhajanMas__IsGer__628FA481") @db.TinyInt
+  BhajanCategory_BhajanMaster_FK_BhajanCatIdToBhajanCategory  BhajanCategory? @relation("BhajanMaster_FK_BhajanCatIdToBhajanCategory", fields: [FK_BhajanCatId], references: [BhajanCatId], onDelete: NoAction, onUpdate: NoAction, map: "FK_BhajanCatId")
+  BhajanCategory_BhajanMaster_FK_BhajanCatId1ToBhajanCategory BhajanCategory? @relation("BhajanMaster_FK_BhajanCatId1ToBhajanCategory", fields: [FK_BhajanCatId1], references: [BhajanCatId], onDelete: NoAction, onUpdate: NoAction, map: "FK_BhajanCatId1")
+
+  @@schema("dbo")
+}
+
+model Category {
+  CatId      Int     @id(map: "PK_Category") @db.TinyInt
+  CatName    String? @db.VarChar(50)
+  CatNameGuj String? @db.NText
+
+  @@schema("dbo")
+}
+
+model dailydetail {
+  infoid          Int       @id(map: "PK_DailyDetail") @default(autoincrement())
+  infodate        DateTime? @db.Date
+  infoyear        Int?      @default(0, map: "DF__dailydeta__infoy__5070F446") @db.SmallInt
+  infomonth       Int?      @default(0, map: "DF__dailydeta__infom__5165187F") @db.SmallInt
+  infoday         Int?      @default(0, map: "DF__dailydeta__infod__52593CB8") @db.SmallInt
+  place           String?   @db.NText
+  city            String?   @db.NText
+  shortdescguj    String?   @db.NText
+  shortdeschindi  String?   @db.NText
+  shortdesceng    String?   @db.NText
+  placelong       Decimal?  @db.Decimal(18, 0)
+  placelatt       Decimal?  @db.Decimal(18, 0)
+  longdesc        String?   @db.NText
+  pradesh         String?   @db.NText
+  flagpadharamni  Boolean?
+  flagsabha       Boolean?
+  flagthal        Boolean?
+  videourl        String?   @db.Text
+  photourl        String?   @db.Text
+  audioref        String?   @db.Text
+  flagtelegram    Boolean?
+  flagpatrikaapp  Boolean?
+  flagparamrutapp Boolean?
+  flagvicharanapp Boolean?
+  flagsuhradapp   Boolean?
+  flagprivate     Boolean?
+  flagcalendar    Boolean?
+  flagavd         Boolean?
+  flagai          Boolean?
+  userid          Int?
+  reference       String?   @db.NText
+  category        String?   @db.NText
+  remark          String?   @db.NText
+  extrafield1     String?   @db.NText
+  extrafield2     String?   @db.NText
+
+  @@schema("anirdesh")
+}
+
+model KioskCenters {
+  CenterId        Int             @id(map: "PK_Center") @db.SmallInt
+  CenterName      String?         @db.NVarChar(255)
+  CenterNameGuj   String?         @db.NVarChar(255)
+  CenterNameAlias String?         @db.NVarChar(255)
+  City            String?         @db.NVarChar(255)
+  Taluka          String?         @db.NVarChar(255)
+  District        String?         @db.NVarChar(255)
+  CenterState     String?         @db.NVarChar(255)
+  Country         String?         @db.NVarChar(255)
+  CenterAddress   String?         @db.NVarChar(255)
+  Latitude        Decimal?        @db.Decimal(9, 6)
+  Longitude       Decimal?        @db.Decimal(9, 6)
+  KioskDevotees   KioskDevotees[]
+  KioskUsers      KioskUsers[]
+
+  @@schema("anirdesh")
+}
+
+model KioskDevotees {
+  DevoteeId           Int                   @id(map: "PK_Devotee")
+  DevoteeName         String?               @db.NVarChar(255)
+  DevoteeNameGuj      String?               @db.NVarChar(255)
+  AddLine1            String?               @db.NVarChar(255)
+  AddLine2            String?               @db.NVarChar(255)
+  AddLine3            String?               @db.NVarChar(255)
+  City                String?               @db.NVarChar(255)
+  Taluka              String?               @db.NVarChar(255)
+  District            String?               @db.NVarChar(255)
+  DevState            String?               @db.NVarChar(255)
+  Country             String?               @db.NVarChar(255)
+  AreaGuj             String?               @db.NVarChar(255)
+  CityGuj             String?               @db.NVarChar(255)
+  PhotoUrl            String?               @db.NVarChar(255)
+  Latitude            Decimal?              @db.Decimal(9, 6)
+  Longitude           Decimal?              @db.Decimal(9, 6)
+  CenterId            Int?                  @db.SmallInt
+  KioskCenters        KioskCenters?         @relation(fields: [CenterId], references: [CenterId], onDelete: NoAction, onUpdate: NoAction, map: "FK_kioskcenter")
+  KioskDevoteesLetter KioskDevoteesLetter[]
+  KioskDevoteesPhoto  KioskDevoteesPhoto[]
+  KioskDevoteesVideo  KioskDevoteesVideo[]
+
+  @@schema("anirdesh")
+}
+
+model KioskDevoteesLetter {
+  DevoteeId      Int?
+  LetterThumbUrl String?        @db.NVarChar(255)
+  LetterUrl      String?        @db.NVarChar(255)
+  LetterId       Int            @id(map: "PK_Letter") @db.SmallInt
+  KioskDevotees  KioskDevotees? @relation(fields: [DevoteeId], references: [DevoteeId], onDelete: NoAction, onUpdate: NoAction, map: "FK_KioskDevotee3")
+
+  @@schema("anirdesh")
+}
+
+model KioskDevoteesPhoto {
+  DevoteeId     Int?
+  PhotoThumbUrl String?        @db.NVarChar(255)
+  PhotoUrl      String?        @db.NVarChar(255)
+  PhotoId       Int            @id(map: "PK_Photo") @db.SmallInt
+  KioskDevotees KioskDevotees? @relation(fields: [DevoteeId], references: [DevoteeId], onDelete: NoAction, onUpdate: NoAction, map: "FK_KioskDevotee2")
+
+  @@schema("anirdesh")
+}
+
+model KioskDevoteesVideo {
+  DevoteeId     Int?
+  VideoThumbUrl String?        @db.NVarChar(255)
+  VideoUrl      String?        @db.NVarChar(255)
+  VideoId       Int            @id(map: "PK_Video") @db.SmallInt
+  KioskDevotees KioskDevotees? @relation(fields: [DevoteeId], references: [DevoteeId], onDelete: NoAction, onUpdate: NoAction, map: "FK_KioskDevotee1")
+
+  @@schema("anirdesh")
+}
+
+model KioskUsers {
+  UserId       Int           @id(map: "PK_User") @db.SmallInt
+  UserName     String?       @db.NVarChar(255)
+  UserPass     String?       @db.NVarChar(255)
+  CenterId     Int?          @db.SmallInt
+  AdminFlag    Boolean       @default(false, map: "DF__KioskUser__Admin__534D60F1")
+  KioskCenters KioskCenters? @relation(fields: [CenterId], references: [CenterId], onDelete: NoAction, onUpdate: NoAction, map: "FK_CenterId")
+
+  @@schema("anirdesh")
+}
+
+model Parampara {
+  ParId   Int     @id(map: "PK_Parampara") @db.TinyInt
+  ParName String? @db.VarChar(50)
+
+  @@schema("dbo")
+}
+
+model Prasang {
+  PsgId          Int       @id(map: "PK_Prasang")
+  PsgTitle       String?   @db.NVarChar(50)
+  PsgContentFile String?   @db.VarChar(50)
+  PsgContent     String?   @db.NText
+  CatId          Int?      @db.TinyInt
+  ParId          Int?      @db.TinyInt
+  PubDate        DateTime? @db.Date
+  IsEng          Int?      @db.TinyInt
+  IsNew          Int?      @db.TinyInt
+  IsDelete       Boolean   @default(false, map: "DF_Prasang_IsDelete")
+  IsHnd          Int?      @db.TinyInt
+  EnglishTitle   String?   @db.NText
+  HindiTitle     String?   @db.NText
+  GujaratiTitle  String?   @db.NText
+
+  @@schema("dbo")
+}
+
+model PrasangEnglish {
+  psgid    Int      @id(map: "PK_PrasangEnglish")
+  psgtitle String?  @db.NVarChar(255)
+  psgfile  String?  @db.NVarChar(255)
+  psghtml  String?  @db.NText
+  gujid    Int?     @default(0, map: "DF__PrasangEn__gujid__5441852A")
+  catid    Int?     @default(0, map: "DF__PrasangEn__catid__5535A963") @db.SmallInt
+  ref      String?  @db.NVarChar(255)
+  aiflag   Boolean? @default(false, map: "DF__PrasangEn__aifla__5629CD9C")
+  psgyear  String?  @db.NVarChar(255)
+  remark   String?  @db.NVarChar(255)
+  isdelete Boolean? @default(false, map: "DF__PrasangEn__isdel__571DF1D5")
+
+  @@schema("anirdesh")
+}
+
+model PrasangHindi {
+  psgid    Int      @id(map: "PK_PrasangHindi")
+  psgtitle String?  @db.NVarChar(255)
+  psgfile  String?  @db.NVarChar(255)
+  psghtml  String?  @db.NText
+  gujid    Int?     @default(0, map: "DF__PrasangHi__gujid__5812160E")
+  catid    Int?     @default(0, map: "DF__PrasangHi__catid__59063A47") @db.SmallInt
+  ref      String?  @db.NVarChar(255)
+  aiflag   Boolean? @default(false, map: "DF__PrasangHi__aifla__59FA5E80")
+  psgyear  String?  @db.NVarChar(255)
+  remark   String?  @db.NVarChar(255)
+
+  @@schema("anirdesh")
+}
+
+model prasangsearch {
+  id          Int     @id(map: "PK_prasangsearch") @unique(map: "index_psg_id") @db.SmallInt
+  psgtitle    String? @db.NVarChar(50)
+  psgtitleguj String? @db.NVarChar(50)
+  psghtml     String? @db.NText
+  psgtags     String? @db.NText
+
+  @@schema("dbo")
+}
+
+model Pravachan {
+  prvid       Int     @id(map: "PK_Pravachan")
+  prvtitle    String? @db.NVarChar(255)
+  prvdate     String? @db.NVarChar(50)
+  prvyear     String? @db.NVarChar(50)
+  prvfile     String? @db.NVarChar(255)
+  prvhtml     String? @db.NText
+  prvplace    String? @db.NVarChar(255)
+  prvcat      Int?    @default(1, map: "DF__Pravachan__prvca__5AEE82B9") @db.SmallInt
+  prvtags     String? @db.NVarChar(255)
+  prvvideourl String? @db.NText
+  prvaudiourl String? @db.NText
+  prvinfo     String? @db.NVarChar(255)
+  prvref      String? @db.NVarChar(255)
+  prvprasang  String? @db.NText
+  prvquote    String? @db.NText
+  achaman     String? @db.NVarChar(255)
+  prvno       Int?    @default(0, map: "DF__Pravachan__prvno__5BE2A6F2") @db.SmallInt
+  prvremark   String? @db.NText
+
+  @@schema("anirdesh")
+}
+
+model PravachanHindi {
+  prvid       Int     @id(map: "PK_Pravachan_Hindi")
+  prvtitle    String? @db.NVarChar(255)
+  prvdate     String? @db.NVarChar(50)
+  prvyear     String? @db.NVarChar(50)
+  prvfile     String? @db.NVarChar(255)
+  prvhtml     String? @db.NText
+  prvplace    String? @db.NVarChar(255)
+  prvcat      Int?    @default(1, map: "DF__Pravachan__prvca__5CD6CB2B") @db.SmallInt
+  prvtags     String? @db.NVarChar(255)
+  prvvideourl String? @db.NText
+  prvaudiourl String? @db.NText
+  prvinfo     String? @db.NVarChar(255)
+  prvref      String? @db.NVarChar(255)
+  prvprasang  String? @db.NText
+  prvquote    String? @db.NText
+  achaman     String? @db.NVarChar(255)
+  prvno       Int?    @default(0, map: "DF__Pravachan__prvno__5DCAEF64") @db.SmallInt
+  prvremark   String? @db.NText
+
+  @@schema("anirdesh")
+}
+
+model quote {
+  quoteid      Int     @id(map: "PK_Quote")
+  quoteguj     String? @db.NText
+  quotehindi   String? @db.NText
+  quoteeng     String? @db.NText
+  quotemarathi String? @db.NText
+  remark       String? @db.NText
+
+  @@schema("anirdesh")
+}
+
+model users {
+  userid    Int    @id(map: "PK_Users") @default(autoincrement())
+  username  String @unique(map: "UQ__users__F3DBC572794C2704") @db.VarChar(255)
+  userpass  String @db.VarChar(255)
+  useremail String @unique(map: "UQ__users__870EAE614BC6F01F") @db.VarChar(255)
+
+  @@map("users")
+  @@schema("anirdesh")
+}
+
+model vachan {
+  id         Int     @id(map: "PK_vachan") @unique(map: "index_vachan_id") @db.SmallInt
+  vchtitle   String? @db.NVarChar(100)
+  vchhtml    String? @db.NText
+  vchsection String? @db.NVarChar(50)
+  vchno      Int?    @default(0, map: "DF_vachan_vchno") @db.SmallInt
+  vchtags    String? @db.NText
+
+  @@schema("dbo")
+}
+
+model vato {
+  id       Int     @id(map: "PK_vato") @unique(map: "ui_vato")
+  chid     Int?    @db.SmallInt
+  chname   String? @db.NVarChar(50)
+  vatid    Int?    @db.SmallInt
+  vattitle String? @db.NVarChar(100)
+  vathtml  String? @db.NText
+  vattags  String? @db.NText
+
+  @@schema("dbo")
+}
+
+model VicharanDarshan {
+  VicharanId   Int     @id(map: "PK_Vicharan")
+  VicharanDate String? @db.NVarChar(255)
+  Place        String? @db.NVarChar(255)
+  Detail       String? @db.NVarChar(255)
+  Latitude     String? @db.NVarChar(255)
+  Longitude    String? @db.NVarChar(255)
+  Images       String? @db.NText
+  Videos       String? @db.NText
+  SabhaVideo   String? @db.NText
+  ReportFile   String? @db.NText
+  PrasangFiles String? @db.NText
+  Remark       String? @db.NVarChar(255)
+  Pradesh      String? @db.NVarChar(255)
+
+  @@schema("anirdesh")
+}
