@@ -68,8 +68,8 @@ export const getDashboardCounts = async (): Promise<DashboardCounts> => {
     countPadharamni: counts[0],
     countThal: counts[1],
     countSabha: counts[2],
-    countPradesh: counts[3],
-    countCalender: counts[4],
+    countPradesh: 0,
+    countCalender: counts[3],
   };
 };
 
