@@ -31,6 +31,7 @@ export default function AddPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<DailyDetail>({
     infoid: 0,
+    userid: authContext?.user?.userid,
   });
   const router = useRouter();
 
@@ -50,7 +51,6 @@ export default function AddPage() {
 
     setFormData((prevState) => ({
       ...prevState,
-      userid: authContext?.user?.userid,
     }));
 
     const combinedData = { ...formData, ...checkboxes };
@@ -63,7 +63,7 @@ export default function AddPage() {
 
     if (response.success) {
       setIsLoading(false);
-      router.push("/daily-details");
+      router.push(`/daily-details/${authContext?.user?.userid}`);
     } else {
       console.error("Failed to insert data");
     }

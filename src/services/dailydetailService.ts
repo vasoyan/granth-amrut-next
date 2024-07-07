@@ -57,6 +57,7 @@ export const getDashboardCounts = async (): Promise<DashboardCounts> => {
     { where: { flagthal: true } },
     { where: { flagsabha: true } },
     { where: { flagcalendar: true } },
+    { where: { flagavd: true } },
   ];
 
   // Get counts based on each condition
@@ -68,8 +69,8 @@ export const getDashboardCounts = async (): Promise<DashboardCounts> => {
     countPadharamni: counts[0],
     countThal: counts[1],
     countSabha: counts[2],
-    countPradesh: 0,
     countCalender: counts[3],
+    countAVD: counts[4],
   };
 };
 

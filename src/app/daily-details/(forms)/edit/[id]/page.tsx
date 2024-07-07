@@ -47,7 +47,11 @@ export default function EditPage({ params }: { params: { id: number } }) {
 
       if (response.success && response.data && !Array.isArray(response.data)) {
         setFormData(response.data);
+
         setIsFormDisabled(authContext?.user?.userid != response.data?.userid);
+
+        if (authContext?.user?.userid == 1) setIsFormDisabled(false);
+
         setCheckboxes({
           flagpadharamni: response.data.flagpadharamni ?? false,
           flagsabha: response.data.flagsabha ?? false,

@@ -2,6 +2,6 @@ export interface DashboardCounts {
   countPadharamni: number;
   countThal: number;
   countSabha: number;
-  countPradesh: number;
+  countAVD: number;
   countCalender: number;
 }
